@@ -38,6 +38,11 @@ def main():
             if ship.collision(asteroid.Asteroid) is True:
                 print("Game Over")
                 sys.exit()
+        for asteroid.Asteroid in asteroids:
+            for bullet in shots_group:
+                if bullet.collision(asteroid.Asteroid) is True:
+                    bullet.kill()
+                    asteroid.Asteroid.kill()
         pygame.display.flip()
         time_passed = clock.tick(60)
         dt = time_passed / 1000

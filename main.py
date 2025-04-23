@@ -18,10 +18,10 @@ def main():
     dt = 0
     updatable = pygame.sprite.Group() 
     drawable = pygame.sprite.Group()
-    asteroids = pygame.sprite.Group()
+    rocks = pygame.sprite.Group()
     shots_group = pygame.sprite.Group()
     player.Player.containers = (updatable, drawable)
-    asteroid.Asteroid.containers = (asteroids, updatable, drawable)
+    asteroid.Asteroid.containers = (rocks, updatable, drawable)
     AsteroidField.containers = (updatable)
     player.Shot.containers = (shots_group, updatable, drawable)
     ship = player.Player((SCREEN_WIDTH / 2), (SCREEN_HEIGHT / 2), shots_group)
@@ -34,15 +34,15 @@ def main():
         updatable.update(dt)
         for entity in drawable:
             entity.draw(screen)
-        for asteroid.Asteroid in asteroids:
-            if ship.collision(asteroid.Asteroid) is True:
+        for rock in rocks:
+            if ship.collision(rock) is True:
                 print("Game Over")
                 sys.exit()
-        for asteroid.Asteroid in asteroids:
+        for rock in rocks:
             for bullet in shots_group:
-                if bullet.collision(asteroid.Asteroid) is True:
+                if bullet.collision(rock) is True:
                     bullet.kill()
-                    asteroid.Asteroid.kill()
+                    rock.split()
         pygame.display.flip()
         time_passed = clock.tick(60)
         dt = time_passed / 1000
